@@ -60,6 +60,9 @@
 
 #define MAX_INDEX_VAL (0xFFF0u)
 
+/* Channel no. where the VBG voltage is connected.*/
+#define VBG_CHANNEL    (0u)
+
 /*******************************************************************************
 * Global Variables
 *******************************************************************************/
@@ -402,7 +405,7 @@ int main(void)
         /* Delay to stabilize IDAC output */
         Cy_SysLib_DelayUs(IDAC_SETTLE_TIME);
 #endif
-        if(OK_STATUS != SelfTests_Opamp(CYBSP_DUT_SAR_ADC_HW, ANALOG_OPAMP_SAR_RESULT1, ANALOG_OPAMP_ACURACCY))
+        if(OK_STATUS != SelfTests_Opamp(CYBSP_DUT_SAR_ADC_HW, ANALOG_OPAMP_SAR_RESULT1, ANALOG_OPAMP_ACURACCY, 0x01, 1))
         {
             /* Process error */
             printf("\r\nOPAMP_V1 test: error\r\n");
@@ -419,7 +422,7 @@ int main(void)
         Cy_GPIO_Pin_FastInit(CYBSP_DUT_OPAMP_VPLUS_PORT, CYBSP_DUT_OPAMP_VPLUS_PIN, CY_GPIO_DM_ANALOG, 0u, HSIOM_SEL_AMUXB);
 #endif
 
-        if(OK_STATUS != SelfTests_Opamp(CYBSP_DUT_SAR_ADC_HW, ANALOG_OPAMP_SAR_RESULT2, ANALOG_OPAMP_ACURACCY))
+        if(OK_STATUS != SelfTests_Opamp(CYBSP_DUT_SAR_ADC_HW, ANALOG_OPAMP_SAR_RESULT2, ANALOG_OPAMP_ACURACCY, 0x01, 1))
         {
             /* Process error */
             printf("\r\nOPAMP_V2 test: error\r\n");
@@ -440,7 +443,7 @@ int main(void)
         Cy_SysLib_DelayUs(IDAC_SETTLE_TIME);
 #endif
         /* Test the first refrence voltage */
-        if(OK_STATUS != SelfTests_ADC(CYBSP_DUT_SAR_ADC_HW, ANALOG_ADC_CHNL_VREF1, ANALOG_ADC_SAR_RESULT1, ANALOG_ADC_ACURACCY))
+        if(OK_STATUS != SelfTests_ADC(CYBSP_DUT_SAR_ADC_HW, ANALOG_ADC_CHNL_VREF1, ANALOG_ADC_SAR_RESULT1, ANALOG_ADC_ACURACCY, VBG_CHANNEL, 1))
         {
             /* Process error */
             printf("\r\nADC_V1 test: error\r\n");
@@ -454,7 +457,7 @@ int main(void)
         Cy_SysLib_DelayUs(IDAC_SETTLE_TIME);
 #endif
         /* Test the second refrence voltage */
-        if(OK_STATUS != SelfTests_ADC(CYBSP_DUT_SAR_ADC_HW, ANALOG_ADC_CHNL_VREF2, ANALOG_ADC_SAR_RESULT2, ANALOG_ADC_ACURACCY))
+        if(OK_STATUS != SelfTests_ADC(CYBSP_DUT_SAR_ADC_HW, ANALOG_ADC_CHNL_VREF2, ANALOG_ADC_SAR_RESULT2, ANALOG_ADC_ACURACCY, VBG_CHANNEL, 1))
         {
             /* Process error */
             printf("\r\nADC_V2 test: error\r\n");
